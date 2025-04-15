@@ -1,8 +1,6 @@
 package es.ieslavereda.proyecto2425_servidor.controller;
 
-import es.ieslavereda.proyecto2425_servidor.repository.model.Usuario;
 import es.ieslavereda.proyecto2425_servidor.service.OficioService;
-import es.ieslavereda.proyecto2425_servidor.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +31,7 @@ public class OficioController {
     @GetMapping("/oficios/imagen/{id}")
     public ResponseEntity<?> getImagenByID(@PathVariable("id") int id){
         try {
-            Integer imagen = oficioService.getImagenByID(id);
+            String imagen = oficioService.getImagenByID(id);
             if (imagen==null)
                 return new ResponseEntity<>("Imagen no encontrada", HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(imagen, HttpStatus.OK);

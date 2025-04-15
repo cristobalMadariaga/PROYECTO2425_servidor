@@ -21,7 +21,7 @@ public class OficioRepository implements IOficioRepository{
     }
 
     @Override
-    public Integer getImagenByID(int id) {
-        return 0;
+    public String getImagenByID(int id) {
+        return null;
     }
 }
