@@ -1,5 +1,6 @@
 package es.ieslavereda.proyecto2425_servidor.controller;
 
+import es.ieslavereda.proyecto2425_servidor.repository.model.Oficio;
 import es.ieslavereda.proyecto2425_servidor.service.OficioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,18 @@ public class OficioController {
     public ResponseEntity<?> getAll(){
         try {
             return new ResponseEntity<>(oficioService.getAll(), HttpStatus.OK);
+        } catch (SQLException e){
+            return response(e);
+        }
+    }
+    //añadido el getbyID
+    @GetMapping("/oficios/{id}")
+    public ResponseEntity<?> getAll(@PathVariable("id") int id){
+        try {
+            Oficio oficio = oficioService.getOficioByID(id);
+            if (oficio == null)
+                return new ResponseEntity<>("Oficio no encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(oficio, HttpStatus.OK);
         } catch (SQLException e){
             return response(e);
         }

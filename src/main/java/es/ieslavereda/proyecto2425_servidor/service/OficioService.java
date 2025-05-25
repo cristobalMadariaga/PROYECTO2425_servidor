@@ -16,6 +16,10 @@ public class OficioService {
     public List<Oficio> getAll() throws SQLException {
         return oficioRepository.getAll();
     }
+    //añadido el getbyID
+    public Oficio getOficioByID(int id) throws SQLException{
+        return oficioRepository.getOficioByID(id);
+    }
     public String getImagenByID(int id) throws SQLException {
         return oficioRepository.getImagenByID(id);
     }

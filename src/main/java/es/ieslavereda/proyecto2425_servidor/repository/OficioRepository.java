@@ -42,12 +42,35 @@ public class OficioRepository implements IOficioRepository{
         return oficios;
     }
 
+    //he hecho otro procedimiento para sacar otro oficio por id
+    @Override
+    public Oficio getOficioByID(int id) {
+        Oficio oficio = null;
+        String query = "{call obtener_oficio(?)}";
+        try(Connection connection = dataSource.getConnection();
+            CallableStatement cs = connection.prepareCall(query)){
+            cs.setInt(1, id);
+            ResultSet rs = cs.executeQuery();
+
+            oficio = new Oficio(
+                    rs.getInt("idOficio"),
+                    rs.getString("descripcion"),
+                    rs.getString("image")
+            );
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return oficio;
+    }
+
+
     @Override
     public String getImagenByID(int id) {
         String query = "{call obtener_image_oficio(?,?)}";
         String image = "";
         try(Connection connection = dataSource.getConnection();
-            CallableStatement cs = connection.prepareCall(query)
+            CallableStatement cs = connection.prepareCall(query);
+
         ){
             cs.registerOutParameter(1, Types.VARCHAR);
             cs.setInt(2, id);

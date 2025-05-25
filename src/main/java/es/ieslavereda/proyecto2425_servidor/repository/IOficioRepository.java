@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IOficioRepository {
     List<Oficio> getAll();
+    Oficio getOficioByID(int id);
     String getImagenByID(int id);
 }
