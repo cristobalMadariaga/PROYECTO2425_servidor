@@ -28,5 +28,15 @@ public class Usuario {
         return apellidos;
     }
 
+    //para hacer pruebas
+    @Override
+    public String toString(){
+        return  "\n--------------------------------"+
+                "\n---"+"id: "+idUsuario+
+                "\n---"+"nombre: "+nombre+
+                "\n---"+"apellidos: "+apellidos+
+                "\n---"+"idOficio: "+Oficio_idOficio;
+
+    }
 
 }

@@ -23,6 +23,14 @@ public class Oficio {
         return image;
     }
 
+    //para pruebas
+    @Override
+    public String toString(){
+        return  "\n--------------------------------"+
+                "\n---"+"idOficio: "+idOficio+
+                "\n---"+"nombre: "+descripcion+
+                "\n---"+"image: "+image;
 
+    }
 
 }

@@ -18,14 +18,16 @@ public class OficioRepository implements IOficioRepository{
     @Qualifier("mysqlDataSource")
     private DataSource dataSource;
 
+    //He cambiado el procedimiento de la bbdd para que solo haga select *
     @Override
     public List<Oficio> getAll() {
         List<Oficio> oficios = new ArrayList<>();
         String query = "{call obtener_oficios()}";
         try(Connection connection = dataSource.getConnection();
             CallableStatement cs = connection.prepareCall(query);
-            ResultSet resultSet = cs.executeQuery()
             ){
+            ResultSet resultSet = cs.executeQuery();
+
             while(resultSet.next()){
                 oficios.add(new Oficio(
                             resultSet.getInt("idOficio"),
@@ -42,14 +44,16 @@ public class OficioRepository implements IOficioRepository{
 
     @Override
     public String getImagenByID(int id) {
-        String query = "select * from oficio where id = ?";
+        String query = "{call obtener_image_oficio(?,?)}";
         String image = "";
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement(query)
+            CallableStatement cs = connection.prepareCall(query)
         ){
-            ps.setInt(1, id);
-            ResultSet resultSet = ps.executeQuery();
-            image = resultSet.getString("image");
+            cs.registerOutParameter(1, Types.VARCHAR);
+            cs.setInt(2, id);
+
+            cs.execute();
+            image = cs.getString(1);
 
         } catch (SQLException e){
             e.printStackTrace();

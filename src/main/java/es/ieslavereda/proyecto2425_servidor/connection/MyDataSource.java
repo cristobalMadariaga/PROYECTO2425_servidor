@@ -15,20 +15,11 @@ import java.util.Properties;
 public class MyDataSource {
     @Bean(name="mysqlDataSource")
     public static DataSource getMyDataSource(){
-        Properties properties = new Properties();
-        MysqlDataSource dataSource = null;
-
-        try(FileInputStream fis = new FileInputStream("db.properties")){
-            properties.load(fis);
-            dataSource = new MysqlDataSource();
-            //to do añadir URL, USER & PASSWORD
-            dataSource.setUser("MYSQL_DB_USERNAME");
-            dataSource.setPassword("MYSQL_DB_PASSWORD");
-            dataSource.setURL("MYSQL_DB_URL");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        MysqlDataSource dataSource = new MysqlDataSource();
+        //to do añadir URL, USER & PASSWORD
+        dataSource.setURL("jdbc:mysql://localhost:3306/proyectoprg_2425");
+        dataSource.setUser("proyecto2425");
+        dataSource.setPassword("1111");
 
         return dataSource;
     }
