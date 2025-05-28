@@ -23,7 +23,7 @@ public class Oficio {
         return image;
     }
 
-    //para pruebas
+    //para pruebas, ignorar
     @Override
     public String toString(){
         return  "\n--------------------------------"+
