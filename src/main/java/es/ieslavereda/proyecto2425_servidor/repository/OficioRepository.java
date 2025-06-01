@@ -48,15 +48,16 @@ public class OficioRepository implements IOficioRepository{
         Oficio oficio = null;
         String query = "{call obtener_oficio(?)}";
         try(Connection connection = dataSource.getConnection();
-            CallableStatement cs = connection.prepareCall(query)){
+            CallableStatement cs = connection.prepareCall(query)) {
             cs.setInt(1, id);
             ResultSet rs = cs.executeQuery();
-
-            oficio = new Oficio(
-                    rs.getInt("idOficio"),
-                    rs.getString("descripcion"),
-                    rs.getString("image")
-            );
+            if (rs.next()){
+                oficio = new Oficio(
+                        rs.getInt("idOficio"),
+                        rs.getString("descripcion"),
+                        rs.getString("image")
+                );
+            }
         } catch (SQLException e){
             e.printStackTrace();
         }

@@ -52,11 +52,13 @@ public class UsuarioRepository implements ICRUDUsuario{
             PreparedStatement ps = connection.prepareStatement(query)){
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
-            usuario = new Usuario(
-                    resultSet.getInt("idUsuario"),
-                    resultSet.getString("nombre"),
-                    resultSet.getString("apellidos"),
-                    resultSet.getInt("Oficio_idOficio"));
+            if (resultSet.next()) {
+                usuario = new Usuario(
+                        resultSet.getInt("idUsuario"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellidos"),
+                        resultSet.getInt("Oficio_idOficio"));
+            }
         }
         return usuario;
     }
@@ -79,7 +81,8 @@ public class UsuarioRepository implements ICRUDUsuario{
 
     @Override
     public Usuario addUser(Usuario usuario) throws SQLException {
-        String query = "insert into usuario (idUsuario, nombre, apellidos, Oficio_idOficio)";
+        String query = "insert into usuario (idUsuario, nombre, apellidos, Oficio_idOficio)" +
+                        "values (?,?,?,?)";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement ps = connection.prepareStatement(query)){
             ps.setInt(1, usuario.getIdUsuario());
@@ -97,7 +100,7 @@ public class UsuarioRepository implements ICRUDUsuario{
 
     @Override
     public Usuario updateUser(Usuario usuario) throws SQLException {
-        String query = "update usuario set nombre = ?, apellidos = ?, Oficio_idOficio = ?" +
+        String query = "update usuario set nombre = ?, apellidos = ?, Oficio_idOficio = ? " +
                 "where idUsuario = ?";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement ps = connection.prepareStatement(query)){
@@ -105,6 +108,7 @@ public class UsuarioRepository implements ICRUDUsuario{
             ps.setString(2, usuario.getApellidos());
             ps.setInt(3, usuario.getOficio_idOficio());
             ps.setInt(4, usuario.getIdUsuario());
+            ps.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }

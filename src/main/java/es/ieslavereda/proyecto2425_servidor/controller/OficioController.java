@@ -30,7 +30,7 @@ public class OficioController {
     }
     //añadido el getbyID
     @GetMapping("/oficios/{id}")
-    public ResponseEntity<?> getAll(@PathVariable("id") int id){
+    public ResponseEntity<?> getOficioByID(@PathVariable("id") int id){
         try {
             Oficio oficio = oficioService.getOficioByID(id);
             if (oficio == null)
