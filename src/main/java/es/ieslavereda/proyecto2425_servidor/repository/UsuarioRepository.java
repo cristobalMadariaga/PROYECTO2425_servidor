@@ -81,14 +81,13 @@ public class UsuarioRepository implements ICRUDUsuario{
 
     @Override
     public Usuario addUser(Usuario usuario) throws SQLException {
-        String query = "insert into usuario (idUsuario, nombre, apellidos, Oficio_idOficio)" +
-                        "values (?,?,?,?)";
+        String query = "insert into usuario (nombre, apellidos, Oficio_idOficio)" +
+                        "values (?,?,?)";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement ps = connection.prepareStatement(query)){
-            ps.setInt(1, usuario.getIdUsuario());
-            ps.setString(2, usuario.getNombre());
-            ps.setString(3, usuario.getApellidos());
-            ps.setInt(4, usuario.getOficio_idOficio());
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getApellidos());
+            ps.setInt(3, usuario.getOficio_idOficio());
             ps.executeUpdate();
 
         } catch (SQLException e){

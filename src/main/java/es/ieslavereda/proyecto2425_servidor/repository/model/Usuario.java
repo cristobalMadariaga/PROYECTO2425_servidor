@@ -11,6 +11,7 @@ public class Usuario {
         this.apellidos = apellidos;
         this.oficio_idOficio = oficio_idOficio;
     }
+
     
     public int getIdUsuario() {
         return idUsuario;
